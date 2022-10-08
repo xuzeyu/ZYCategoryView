@@ -5,5 +5,5 @@
 
 ## 如何导入
 ```
-pod 'FSTextView', :git => 'https://github.com/xuzeyu/FSTextView.git'
+pod 'ZYCategoryView', :git => 'https://github.com/xuzeyu/ZYCategoryView.git'
 ```
