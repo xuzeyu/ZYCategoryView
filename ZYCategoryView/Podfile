@@ -1,0 +1,6 @@
+source 'https://cdn.cocoapods.org/'
+platform :ios, '9.0'
+target :'ZYCategoryView' do
+pod 'JXCategoryView' #分栏库
+pod 'Masonry'
+end

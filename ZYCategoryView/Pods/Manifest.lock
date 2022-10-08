@@ -1,0 +1,20 @@
+PODS:
+  - JXCategoryView (1.5.9)
+  - Masonry (1.1.0)
+
+DEPENDENCIES:
+  - JXCategoryView
+  - Masonry
+
+SPEC REPOS:
+  https://cdn.cocoapods.org/:
+    - JXCategoryView
+    - Masonry
+
+SPEC CHECKSUMS:
+  JXCategoryView: 2ef9ecfd3735158d009ce02d1f29811aa822da65
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+
+PODFILE CHECKSUM: 08a49aae85c90f50074f43fb82aae277ca82c8c9
+
+COCOAPODS: 1.11.0
