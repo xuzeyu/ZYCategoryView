@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JXCategoryListContainerView.h"
 #import "ZYCategoryViewRefreshDelegate.h"
+#import "JXCategoryTitleView.h"
 
 @class ZYCategoryView;
 NS_ASSUME_NONNULL_BEGIN
@@ -38,6 +39,9 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface ZYCategoryView : UIView <ZYCategoryViewRefreshDelegate>
+@property (nonatomic, strong) JXCategoryTitleView *titleView;
+@property (nonatomic, strong) JXCategoryListContainerView *listContainerView;
+
 @property (nonatomic, strong) UIView *line;
 @property (nonatomic, assign) CGFloat lineHeight;
 
@@ -53,8 +57,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setTitleColor:(UIColor *)titleColor;
 - (void)setTitleSelectedColor:(UIColor *)titleSelectedColor;
 - (void)setTitleBackgroudColor:(UIColor *)color;
-- (void)setTitleFont:(UIFont *)titleFont;
-- (void)setTitleSelectedFont:(UIFont *)titleSelectedFont;
 - (void)setContentScrollView:(UIScrollView *)scroll;
 - (void)scrollEnable:(BOOL)isScrollEnable;
 - (void)reloadData;

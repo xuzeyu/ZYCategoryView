@@ -7,7 +7,6 @@
 //
 
 #import "ZYCategoryView.h"
-#import "JXCategoryTitleView.h"
 #import "JXCategoryIndicatorLineView.h"
 #import <objc/runtime.h>
 
@@ -16,8 +15,6 @@
 @end
 
 @interface ZYCategoryView () <JXCategoryViewDelegate, JXCategoryListContainerViewDelegate, JXCategoryTitleViewDataSource>
-@property (nonatomic, strong) JXCategoryTitleView *categoryView;
-@property (nonatomic, strong) JXCategoryListContainerView *listContainerView;
 @property (nonatomic, strong) NSMutableDictionary *refreshDict;
 @property (nonatomic, assign) NSInteger oldSelectIndex;
 @end
@@ -29,14 +26,14 @@
     if (self) {
         self.titleHeight = 50;
         //初始化 JXCategoryTitleView：
-        self.categoryView = [[JXCategoryTitleView alloc] init];
-        self.categoryView.delegate = self;
-        self.categoryView.titleDataSource = self;
-//        self.categoryView.backgroundColor = [UIColor whiteColor];
-        self.categoryView.cellSpacing = 0.0f;
-        self.categoryView.titleFont = [UIFont systemFontOfSize:15];
-        self.categoryView.titleColor = [UIColor colorWithRed:90/255.0f green:90/255.0f blue:90/255.0f alpha:1];
-        [self addSubview:self.categoryView];
+        self.titleView = [[JXCategoryTitleView alloc] init];
+        self.titleView.delegate = self;
+        self.titleView.titleDataSource = self;
+//        self.titleView.backgroundColor = [UIColor whiteColor];
+        self.titleView.cellSpacing = 0.0f;
+        self.titleView.titleFont = [UIFont systemFontOfSize:15];
+        self.titleView.titleColor = [UIColor colorWithRed:90/255.0f green:90/255.0f blue:90/255.0f alpha:1];
+        [self addSubview:self.titleView];
         
         //添加指示器
         JXCategoryIndicatorLineView *lineView = [[JXCategoryIndicatorLineView alloc] init];
@@ -44,13 +41,13 @@
         lineView.indicatorWidth = 20;
         lineView.componentPosition = JXCategoryComponentPosition_Bottom;
 //        lineView.indicatorCornerRadius = 0;
-        self.categoryView.indicators = @[lineView];
+        self.titleView.indicators = @[lineView];
         
-        //初始化 JXCategoryListContainerView 并关联到 categoryView
+        //初始化 JXCategoryListContainerView 并关联到 titleView
         self.listContainerView = [[JXCategoryListContainerView alloc] initWithType:JXCategoryListContainerType_ScrollView delegate:self];
         [self addSubview:self.listContainerView];
-        // 关联到 categoryView
-        self.categoryView.listContainer = self.listContainerView;
+        // 关联到 titleView
+        self.titleView.listContainer = self.listContainerView;
         
         //底部线
         self.line = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 2, CGRectGetWidth(self.frame), self.lineHeight)];
@@ -63,13 +60,13 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.categoryView.frame = CGRectMake(0, 0, self.frame.size.width, self.titleHeight);
-    self.line.frame = CGRectMake(0, CGRectGetMaxY(self.categoryView.frame), self.frame.size.width, self.lineHeight);
+    self.titleView.frame = CGRectMake(0, 0, self.frame.size.width, self.titleHeight);
+    self.line.frame = CGRectMake(0, CGRectGetMaxY(self.titleView.frame), self.frame.size.width, self.lineHeight);
     if (self.titles.count == 0) {
-        self.categoryView.hidden = self.line.hidden = YES;
+        self.titleView.hidden = self.line.hidden = YES;
         self.listContainerView.frame = CGRectMake(0, self.containerViewOffsetY, self.frame.size.width, self.frame.size.height);
     }else {
-        self.categoryView.hidden = self.line.hidden = NO;
+        self.titleView.hidden = self.line.hidden = NO;
         self.listContainerView.frame = CGRectMake(0, CGRectGetMaxY(self.line.frame) + self.containerViewOffsetY, self.frame.size.width, self.frame.size.height - CGRectGetMaxY(self.line.frame));
     }
     
@@ -84,51 +81,43 @@
 
 #pragma mark - 属性
 - (void)setIndicatorWidth:(CGFloat)indicatorWidth {
-    if (self.categoryView.indicators.count > 0) {
-        JXCategoryIndicatorLineView *lineView = (JXCategoryIndicatorLineView *)self.categoryView.indicators[0];
+    if (self.titleView.indicators.count > 0) {
+        JXCategoryIndicatorLineView *lineView = (JXCategoryIndicatorLineView *)self.titleView.indicators[0];
         lineView.indicatorWidth = indicatorWidth;
     }
 }
 
 - (void)setIndicatorColor:(UIColor *)color {
-    if (self.categoryView.indicators.count > 0) {
-        JXCategoryIndicatorLineView *lineView = (JXCategoryIndicatorLineView *)self.categoryView.indicators[0];
+    if (self.titleView.indicators.count > 0) {
+        JXCategoryIndicatorLineView *lineView = (JXCategoryIndicatorLineView *)self.titleView.indicators[0];
         lineView.indicatorColor = color;
     }
 }
 
 - (void)setTitleColor:(UIColor *)titleColor {
-    if (self.categoryView.titleColor != titleColor) {
-        self.categoryView.titleColor = titleColor;
-        [self.categoryView refreshState];
-        [self.categoryView.collectionView.collectionViewLayout invalidateLayout];
-        [self.categoryView.collectionView reloadData];
+    if (self.titleView.titleColor != titleColor) {
+        self.titleView.titleColor = titleColor;
+        [self.titleView refreshState];
+        [self.titleView.collectionView.collectionViewLayout invalidateLayout];
+        [self.titleView.collectionView reloadData];
     }
 }
 
 - (void)setTitleSelectedColor:(UIColor *)titleSelectedColor {
-    if (self.categoryView.titleSelectedColor != titleSelectedColor) {
-        self.categoryView.titleSelectedColor = titleSelectedColor;
-        [self.categoryView refreshState];
-        [self.categoryView.collectionView.collectionViewLayout invalidateLayout];
-        [self.categoryView.collectionView reloadData];
+    if (self.titleView.titleSelectedColor != titleSelectedColor) {
+        self.titleView.titleSelectedColor = titleSelectedColor;
+        [self.titleView refreshState];
+        [self.titleView.collectionView.collectionViewLayout invalidateLayout];
+        [self.titleView.collectionView reloadData];
     }
 }
 
 - (void)setTitleBackgroudColor:(UIColor *)color {
-    self.categoryView.backgroundColor = color;
-}
-
-- (void)setTitleFont:(UIFont *)titleFont {
-    self.categoryView.titleFont = titleFont;
-}
-
-- (void)setTitleSelectedFont:(UIFont *)titleSelectedFont {
-    self.categoryView.titleSelectedFont = titleSelectedFont;
+    self.titleView.backgroundColor = color;
 }
 
 - (void)setContentScrollView:(UIScrollView *)scroll {
-    self.categoryView.contentScrollView = scroll;
+    self.titleView.contentScrollView = scroll;
 }
 
 - (void)scrollEnable:(BOOL)isScrollEnable {
@@ -136,7 +125,7 @@
 }
 
 - (void)reloadData {
-    [self.categoryView reloadData];
+    [self.titleView reloadData];
     [self.listContainerView reloadData];
 }
 
@@ -145,8 +134,8 @@
         [self layoutIfNeeded];
     }
     _titles = titles;
-    self.categoryView.titles = titles;
-    [self.categoryView reloadData];
+    self.titleView.titles = titles;
+    [self.titleView reloadData];
     
     NSString *title = nil;
     for (NSString *str in titles) {
@@ -154,22 +143,22 @@
             title = str;
         }
     }
-    [self setIndicatorWidth:[self widthForFont:self.categoryView.titleFont text:title] + 10];
+    [self setIndicatorWidth:[self widthForFont:self.titleView.titleFont text:title] + 10];
 }
 
 - (void)setDefaultSelectedIndex:(NSInteger)defaultSelectedIndex {
     _defaultSelectedIndex = defaultSelectedIndex;
-    self.categoryView.defaultSelectedIndex = defaultSelectedIndex;
+    self.titleView.defaultSelectedIndex = defaultSelectedIndex;
     self.oldSelectIndex = defaultSelectedIndex;
 }
 
 - (void)setSelectIndex:(NSInteger)selectIndex {
-    [self.categoryView selectItemAtIndex:selectIndex];
+    [self.titleView selectItemAtIndex:selectIndex];
     [self.listContainerView didClickSelectedItemAtIndex:selectIndex];
 }
 
 - (NSInteger)selectIndex {
-    return self.categoryView.selectedIndex;
+    return self.titleView.selectedIndex;
 }
 
 - (NSDictionary <NSNumber *, id<JXCategoryListContentViewDelegate>> *)validListDict {
@@ -177,7 +166,7 @@
 }
 
 - (id)currentContainer {
-    return [self.listContainerView.validListDict objectForKey:@(self.categoryView.selectedIndex)];
+    return [self.listContainerView.validListDict objectForKey:@(self.titleView.selectedIndex)];
 }
 
 #pragma mark - Function
