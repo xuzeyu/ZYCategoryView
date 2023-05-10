@@ -134,21 +134,32 @@
         [self layoutIfNeeded];
     }
     _titles = titles;
+    if (titles.count == 0) {
+        self.titleView.listContainer = nil;
+    }else {
+        self.titleView.listContainer = self.listContainerView;
+    }
     self.titleView.titles = titles;
     [self.titleView reloadData];
     
-    NSString *title = nil;
-    for (NSString *str in titles) {
-        if (str.length > title.length) {
-            title = str;
+    if (titles.count > 0) {
+        NSString *title = nil;
+        for (NSString *str in titles) {
+            if (str.length > title.length) {
+                title = str;
+            }
         }
+        [self setIndicatorWidth:[self widthForFont:self.titleView.titleFont text:title] + 10];
     }
-    [self setIndicatorWidth:[self widthForFont:self.titleView.titleFont text:title] + 10];
 }
 
 - (void)setDefaultSelectedIndex:(NSInteger)defaultSelectedIndex {
     _defaultSelectedIndex = defaultSelectedIndex;
-    self.titleView.defaultSelectedIndex = defaultSelectedIndex;
+    if (self.titleView.listContainer && self.titles.count > 0) {
+        self.titleView.defaultSelectedIndex = defaultSelectedIndex;
+    }else {
+        [self.listContainerView setDefaultSelectedIndex:defaultSelectedIndex];
+    }
     self.oldSelectIndex = defaultSelectedIndex;
 }
 
