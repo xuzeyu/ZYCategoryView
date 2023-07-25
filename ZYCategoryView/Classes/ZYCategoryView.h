@@ -53,6 +53,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) NSDictionary <NSNumber *, id<JXCategoryListContentViewDelegate>> *validListDict;   //已经加载过的列表字典。key是index，value是对应的列表
 @property (nonatomic, strong, readonly) NSObject *currentContainer; //当前内容
 @property (nonatomic, assign) CGFloat titleHeight;
+- (void)setIndicatorWidthEqualCell;//线与 cell 的宽度相等
+- (void)setIndicatorWidth:(CGFloat)indicatorWidth;
+- (void)setIndicatorHeight:(CGFloat)indicatorHeight;
 - (void)setIndicatorColor:(UIColor *)color;
 - (void)setTitleColor:(UIColor *)titleColor;
 - (void)setTitleSelectedColor:(UIColor *)titleSelectedColor;

@@ -80,10 +80,21 @@
 }
 
 #pragma mark - 属性
+- (void)setIndicatorWidthEqualCell {
+    [self setIndicatorWidth:JXCategoryViewAutomaticDimension];
+}
+
 - (void)setIndicatorWidth:(CGFloat)indicatorWidth {
     if (self.titleView.indicators.count > 0) {
         JXCategoryIndicatorLineView *lineView = (JXCategoryIndicatorLineView *)self.titleView.indicators[0];
         lineView.indicatorWidth = indicatorWidth;
+    }
+}
+
+- (void)setIndicatorHeight:(CGFloat)indicatorHeight {
+    if (self.titleView.indicators.count > 0) {
+        JXCategoryIndicatorLineView *lineView = (JXCategoryIndicatorLineView *)self.titleView.indicators[0];
+        lineView.indicatorHeight = indicatorHeight;
     }
 }
 
