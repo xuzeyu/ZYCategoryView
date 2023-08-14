@@ -26,6 +26,12 @@
     //初始化 JXCategoryTitleView：
     if (self.titleViewCustom) {
         self.titleView = self.titleViewCustom(weakSelf);
+        if (!self.titleView.delegate) {
+            self.titleView.delegate = self;
+        }
+        if (!self.titleView.titleDataSource) {
+            self.titleView.titleDataSource = self;
+        }
     }else {
         self.titleView = [[JXCategoryTitleView alloc] init];
         self.titleView.delegate = self;
@@ -53,6 +59,9 @@
     //初始化 JXCategoryListContainerView 并关联到 titleView
     if (self.listContainerViewCustom) {
         self.listContainerView = self.listContainerViewCustom(weakSelf);
+        if (![self valueForKey:@"delegate"]) {
+            [self setValue:self forKey:@"delegate"];
+        }
     }else {
         self.listContainerView = [[JXCategoryListContainerView alloc] initWithType:JXCategoryListContainerType_ScrollView delegate:self];
     }
