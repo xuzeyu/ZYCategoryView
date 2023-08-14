@@ -228,6 +228,21 @@
     return self.selectIndex;
 }
 
+- (NSInteger)zy_currentIndexForTarget:(NSObject *)target {
+    NSNumber *indexNumber = nil;
+    for (NSNumber *number in self.validListDict) {
+        id sObj = self.validListDict[number];
+        if (target == sObj) {
+            indexNumber = number;
+            break;
+        }
+    }
+    if (indexNumber) {
+        return [indexNumber integerValue];
+    }
+    return 0;
+}
+
 //刷新子内容
 - (void)zy_reloadContainers:(ZYCategoryCallSubParameter *)parameter {
     if (!parameter) return;
@@ -409,6 +424,13 @@
     }
 }
 
+- (NSInteger)rep_currentIndex {
+    ZYCategoryView *category = objc_getAssociatedObject(self, @selector(categoryVCDelegate));
+    if (category) {
+        return [category zy_currentIndexForTarget:self];
+    }
+    return 0;
+}
 
 #pragma mark - JXCategoryTitleViewDataSource
 - (CGFloat)categoryTitleView:(JXCategoryTitleView *)titleView widthForTitle:(NSString *)title {
@@ -491,6 +513,13 @@
             if (![delegate respondsToSelector:@selector(zy_selectIndex)]) {
                 SEL sel = @selector(zy_selectIndex);
                 SEL repSel = @selector(rep_selectIndex);
+                Method addMethod = class_getInstanceMethod([self class], repSel);
+                class_addMethod([delegate class], sel, class_getMethodImplementation([self class], repSel), method_getTypeEncoding(addMethod));
+            }
+            
+            if (![delegate respondsToSelector:@selector(zy_currentIndex)]) {
+                SEL sel = @selector(zy_currentIndex);
+                SEL repSel = @selector(rep_currentIndex);
                 Method addMethod = class_getInstanceMethod([self class], repSel);
                 class_addMethod([delegate class], sel, class_getMethodImplementation([self class], repSel), method_getTypeEncoding(addMethod));
             }

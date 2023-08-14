@@ -15,6 +15,7 @@
 @optional
 - (UIViewController *)zy_viewController; //父viewController
 - (NSInteger)zy_selectIndex; //返回当前选择的index
+- (NSInteger)zy_currentIndex; //当前子viewController的index
 - (void)zy_reloadContainers:(ZYCategoryCallSubParameter *)parameter; //刷新子内容
 - (void)zy_callbackSuperVC:(ZYCategoryCallSuperParameter *)parameter; //回调父viewController
 @end
