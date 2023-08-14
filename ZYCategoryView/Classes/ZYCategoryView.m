@@ -7,7 +7,6 @@
 //
 
 #import "ZYCategoryView.h"
-#import "JXCategoryIndicatorLineView.h"
 #import <objc/runtime.h>
 
 @interface JXCategoryListContainerView ()
@@ -20,42 +19,56 @@
 @end
 
 @implementation ZYCategoryView
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.titleHeight = 50;
-        //初始化 JXCategoryTitleView：
+
+- (void)loadView {
+    __weak __typeof(self)weakSelf = self;
+    self.titleHeight = 50;
+    //初始化 JXCategoryTitleView：
+    if (self.titleViewCustom) {
+        self.titleView = self.titleViewCustom(weakSelf);
+    }else {
         self.titleView = [[JXCategoryTitleView alloc] init];
         self.titleView.delegate = self;
         self.titleView.titleDataSource = self;
-//        self.titleView.backgroundColor = [UIColor whiteColor];
+        //        self.titleView.backgroundColor = [UIColor whiteColor];
         self.titleView.cellSpacing = 0.0f;
         self.titleView.titleFont = [UIFont systemFontOfSize:15];
         self.titleView.titleColor = [UIColor colorWithRed:90/255.0f green:90/255.0f blue:90/255.0f alpha:1];
-        [self addSubview:self.titleView];
-        
+    }
+    [self addSubview:self.titleView];
+    
+    JXCategoryIndicatorLineView *lineView;
+    if (self.indicatorLineViewCustom) {
+        lineView = self.indicatorLineViewCustom(weakSelf);
+    }else {
         //添加指示器
-        JXCategoryIndicatorLineView *lineView = [[JXCategoryIndicatorLineView alloc] init];
+        lineView = [[JXCategoryIndicatorLineView alloc] init];
         lineView.indicatorColor = [UIColor redColor];
         lineView.indicatorWidth = 20;
         lineView.componentPosition = JXCategoryComponentPosition_Bottom;
-//        lineView.indicatorCornerRadius = 0;
-        self.titleView.indicators = @[lineView];
-        
-        //初始化 JXCategoryListContainerView 并关联到 titleView
-        self.listContainerView = [[JXCategoryListContainerView alloc] initWithType:JXCategoryListContainerType_ScrollView delegate:self];
-        [self addSubview:self.listContainerView];
-        // 关联到 titleView
-        self.titleView.listContainer = self.listContainerView;
-        
-        //底部线
-        self.line = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 2, CGRectGetWidth(self.frame), self.lineHeight)];
-//        self.line.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
-        self.line.hidden = YES;
-        [self addSubview:self.line];
+        //        lineView.indicatorCornerRadius = 0;
     }
-    return self;
+    self.titleView.indicators = @[lineView];
+    
+    //初始化 JXCategoryListContainerView 并关联到 titleView
+    if (self.listContainerViewCustom) {
+        self.listContainerView = self.listContainerViewCustom(weakSelf);
+    }else {
+        self.listContainerView = [[JXCategoryListContainerView alloc] initWithType:JXCategoryListContainerType_ScrollView delegate:self];
+    }
+    [self addSubview:self.listContainerView];
+    // 关联到 titleView
+    self.titleView.listContainer = self.listContainerView;
+    
+    //底部线
+    if (self.lineCustom) {
+        self.line = self.lineCustom(weakSelf);
+    }else {
+        self.line = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 2, CGRectGetWidth(self.frame), self.lineHeight)];
+        //        self.line.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
+        self.line.hidden = YES;
+    }
+    [self addSubview:self.line];
 }
 
 - (void)layoutSubviews {

@@ -26,15 +26,15 @@ typedef NS_ENUM(NSUInteger, ZYCategoryCallSubReloadType) {
 @property (nonatomic, assign) BOOL isImmediately; //是否马上刷新
 @property (nonatomic, assign) BOOL isForceLoad; //是否强制加载刷新 即容器没加载的也强制加载
 
-@property (nonatomic, strong) ZYCategoryCallSubParameter * __nullable(^sType)(ZYCategoryCallSubReloadType type);
-@property (nonatomic, strong) ZYCategoryCallSubParameter * __nullable(^sIndex)(NSInteger index);
-@property (nonatomic, strong) ZYCategoryCallSubParameter * __nullable(^sIsSelectorContinue)(BOOL isSelectorContinue);
-@property (nonatomic, strong) ZYCategoryCallSubParameter * __nullable(^sSelector)(SEL selector);
-@property (nonatomic, strong) ZYCategoryCallSubParameter * __nullable(^sFirstObj)(NSObject *firstObj);
-@property (nonatomic, strong) ZYCategoryCallSubParameter * __nullable(^sSecondObj)(NSObject *secondObj);
-@property (nonatomic, strong) ZYCategoryCallSubParameter * __nullable(^sThirdObj)(NSObject *thirdObj);
-@property (nonatomic, strong) ZYCategoryCallSubParameter * __nullable(^sIsImmediately)(BOOL isImmediately);
-@property (nonatomic, strong) ZYCategoryCallSubParameter * __nullable(^sIsForceLoad)(BOOL isForceLoad);
+@property (nonatomic, strong, readonly) ZYCategoryCallSubParameter * __nullable(^sType)(ZYCategoryCallSubReloadType type);
+@property (nonatomic, strong, readonly) ZYCategoryCallSubParameter * __nullable(^sIndex)(NSInteger index);
+@property (nonatomic, strong, readonly) ZYCategoryCallSubParameter * __nullable(^sIsSelectorContinue)(BOOL isSelectorContinue);
+@property (nonatomic, strong, readonly) ZYCategoryCallSubParameter * __nullable(^sSelector)(SEL selector);
+@property (nonatomic, strong, readonly) ZYCategoryCallSubParameter * __nullable(^sFirstObj)(NSObject *firstObj);
+@property (nonatomic, strong, readonly) ZYCategoryCallSubParameter * __nullable(^sSecondObj)(NSObject *secondObj);
+@property (nonatomic, strong, readonly) ZYCategoryCallSubParameter * __nullable(^sThirdObj)(NSObject *thirdObj);
+@property (nonatomic, strong, readonly) ZYCategoryCallSubParameter * __nullable(^sIsImmediately)(BOOL isImmediately);
+@property (nonatomic, strong, readonly) ZYCategoryCallSubParameter * __nullable(^sIsForceLoad)(BOOL isForceLoad);
 @end
 
 NS_ASSUME_NONNULL_END

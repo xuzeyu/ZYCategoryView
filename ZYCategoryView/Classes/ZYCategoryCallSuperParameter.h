@@ -18,13 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSObject *secondObj;
 @property (nonatomic, strong) NSObject *thirdObj;
 
-@property (nonatomic, strong) ZYCategoryCallSuperParameter * __nullable(^sSelector)(SEL selector);
-@property (nonatomic, strong) ZYCategoryCallSuperParameter * __nullable(^sKey)(NSString *key);
-@property (nonatomic, strong) ZYCategoryCallSuperParameter * __nullable(^sTarget)(NSObject *target);
-@property (nonatomic, strong) ZYCategoryCallSuperParameter * __nullable(^sIndex)(NSInteger index);
-@property (nonatomic, strong) ZYCategoryCallSuperParameter * __nullable(^sFirstObj)(NSObject *firstObj);
-@property (nonatomic, strong) ZYCategoryCallSuperParameter * __nullable(^sSecondObj)(NSObject *secondObj);
-@property (nonatomic, strong) ZYCategoryCallSuperParameter * __nullable(^sThirdObj)(NSObject *thirdObj);
+@property (nonatomic, strong, readonly) ZYCategoryCallSuperParameter * __nullable(^sSelector)(SEL selector);
+@property (nonatomic, strong, readonly) ZYCategoryCallSuperParameter * __nullable(^sKey)(NSString *key);
+@property (nonatomic, strong, readonly) ZYCategoryCallSuperParameter * __nullable(^sTarget)(NSObject *target);
+@property (nonatomic, strong, readonly) ZYCategoryCallSuperParameter * __nullable(^sIndex)(NSInteger index);
+@property (nonatomic, strong, readonly) ZYCategoryCallSuperParameter * __nullable(^sFirstObj)(NSObject *firstObj);
+@property (nonatomic, strong, readonly) ZYCategoryCallSuperParameter * __nullable(^sSecondObj)(NSObject *secondObj);
+@property (nonatomic, strong, readonly) ZYCategoryCallSuperParameter * __nullable(^sThirdObj)(NSObject *thirdObj);
 @end
 
 NS_ASSUME_NONNULL_END

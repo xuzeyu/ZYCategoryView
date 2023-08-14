@@ -9,50 +9,58 @@
 
 @implementation ZYCategoryCallSuperParameter
 
+@synthesize sSelector = _sSelector;
+@synthesize sKey = _sKey;
+@synthesize sTarget = _sTarget;
+@synthesize sIndex = _sIndex;
+@synthesize sFirstObj = _sFirstObj;
+@synthesize sSecondObj = _sSecondObj;
+@synthesize sThirdObj = _sThirdObj;
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
         self.index = - 1;
         __weak __typeof(self)weakSelf = self;
-        self.sSelector = ^ZYCategoryCallSuperParameter * _Nullable(SEL selector) {
+        _sSelector = ^ZYCategoryCallSuperParameter * _Nullable(SEL selector) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.selector = selector;
             return strongSelf;
         };
         
-        self.sKey = ^ZYCategoryCallSuperParameter * _Nullable(NSString * _Nonnull key) {
+        _sKey = ^ZYCategoryCallSuperParameter * _Nullable(NSString * _Nonnull key) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.key = key;
             return strongSelf;
         };
         
-        self.sTarget = ^ZYCategoryCallSuperParameter * _Nullable(NSObject * _Nonnull target) {
+        _sTarget = ^ZYCategoryCallSuperParameter * _Nullable(NSObject * _Nonnull target) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.target = target;
             return strongSelf;
         };
         
-        self.sIndex = ^ZYCategoryCallSuperParameter * _Nullable(NSInteger index) {
+        _sIndex = ^ZYCategoryCallSuperParameter * _Nullable(NSInteger index) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.index = index;
             return strongSelf;
         };
             
         
-        self.sFirstObj = ^ZYCategoryCallSuperParameter * _Nullable(NSObject * _Nonnull firstObj) {
+        _sFirstObj = ^ZYCategoryCallSuperParameter * _Nullable(NSObject * _Nonnull firstObj) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.firstObj = firstObj;
             return strongSelf;
         };
         
-        self.sSecondObj = ^ZYCategoryCallSuperParameter * _Nullable(NSObject * _Nonnull secondObj) {
+        _sSecondObj = ^ZYCategoryCallSuperParameter * _Nullable(NSObject * _Nonnull secondObj) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.secondObj = secondObj;
             return strongSelf;
         };
         
-        self.sThirdObj = ^ZYCategoryCallSuperParameter * _Nullable(NSObject * _Nonnull thirdObj) {
+        _sThirdObj = ^ZYCategoryCallSuperParameter * _Nullable(NSObject * _Nonnull thirdObj) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.thirdObj = thirdObj;
             return strongSelf;

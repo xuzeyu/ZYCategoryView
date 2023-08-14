@@ -9,60 +9,70 @@
 
 @implementation ZYCategoryCallSubParameter
 
+@synthesize sType = _sType;
+@synthesize sIndex = _sIndex;
+@synthesize sIsSelectorContinue = _sIsSelectorContinue;
+@synthesize sSelector = _sSelector;
+@synthesize sFirstObj = _sFirstObj;
+@synthesize sSecondObj = _sSecondObj;
+@synthesize sThirdObj = _sThirdObj;
+@synthesize sIsImmediately = _sIsImmediately;
+@synthesize sIsForceLoad = _sIsForceLoad;
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
         __weak __typeof(self)weakSelf = self;
-        self.sType = ^ZYCategoryCallSubParameter * _Nullable(ZYCategoryCallSubReloadType type) {
+        _sType = ^ZYCategoryCallSubParameter * _Nullable(ZYCategoryCallSubReloadType type) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.type = type;
             return strongSelf;
         };
         
-        self.sIndex = ^ZYCategoryCallSubParameter * _Nullable(NSInteger index) {
+        _sIndex = ^ZYCategoryCallSubParameter * _Nullable(NSInteger index) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.index = index;
             return strongSelf;
         };
         
-        self.sIsSelectorContinue = ^ZYCategoryCallSubParameter * _Nullable(BOOL isSelectorContinue) {
+        _sIsSelectorContinue = ^ZYCategoryCallSubParameter * _Nullable(BOOL isSelectorContinue) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.isSelectorContinue = isSelectorContinue;
             return strongSelf;
         };
         
-        self.sSelector = ^ZYCategoryCallSubParameter * _Nullable(SEL selector) {
+        _sSelector = ^ZYCategoryCallSubParameter * _Nullable(SEL selector) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.selector = selector;
             return strongSelf;
         };
         
-        self.sFirstObj = ^ZYCategoryCallSubParameter * _Nullable(NSObject * _Nonnull firstObj) {
+        _sFirstObj = ^ZYCategoryCallSubParameter * _Nullable(NSObject * _Nonnull firstObj) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.firstObj = firstObj;
             return strongSelf;
         };
         
-        self.sSecondObj = ^ZYCategoryCallSubParameter * _Nullable(NSObject * _Nonnull secondObj) {
+        _sSecondObj = ^ZYCategoryCallSubParameter * _Nullable(NSObject * _Nonnull secondObj) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.secondObj = secondObj;
             return strongSelf;
         };
         
-        self.sThirdObj = ^ZYCategoryCallSubParameter * _Nullable(NSObject * _Nonnull thirdObj) {
+        _sThirdObj = ^ZYCategoryCallSubParameter * _Nullable(NSObject * _Nonnull thirdObj) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.thirdObj = thirdObj;
             return strongSelf;
         };
         
-        self.sIsImmediately = ^ZYCategoryCallSubParameter * _Nullable(BOOL isImmediately) {
+        _sIsImmediately = ^ZYCategoryCallSubParameter * _Nullable(BOOL isImmediately) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.isImmediately = isImmediately;
             return strongSelf;
         };
         
-        self.sIsForceLoad = ^ZYCategoryCallSubParameter * _Nullable(BOOL isForceLoad) {
+        _sIsForceLoad = ^ZYCategoryCallSubParameter * _Nullable(BOOL isForceLoad) {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.isForceLoad = isForceLoad;
             return strongSelf;

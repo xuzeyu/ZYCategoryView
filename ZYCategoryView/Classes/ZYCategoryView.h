@@ -10,6 +10,7 @@
 #import "JXCategoryListContainerView.h"
 #import "ZYCategoryViewRefreshDelegate.h"
 #import "JXCategoryTitleView.h"
+#import "JXCategoryIndicatorLineView.h"
 
 @class ZYCategoryView;
 NS_ASSUME_NONNULL_BEGIN
@@ -42,6 +43,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) JXCategoryTitleView *titleView;
 @property (nonatomic, strong) JXCategoryListContainerView *listContainerView;
 
+@property (nonatomic, strong, nullable) JXCategoryTitleView *(^titleViewCustom)(ZYCategoryView *categoryView);
+@property (nonatomic, strong, nullable) JXCategoryIndicatorLineView *(^indicatorLineViewCustom)(ZYCategoryView *categoryView);
+@property (nonatomic, strong, nullable) JXCategoryListContainerView *(^listContainerViewCustom)(ZYCategoryView *categoryView);
+@property (nonatomic, strong, nullable) UIView *(^lineCustom)(ZYCategoryView *categoryView);
+
+
 @property (nonatomic, strong) UIView *line;
 @property (nonatomic, assign) CGFloat lineHeight;
 
@@ -53,6 +60,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) NSDictionary <NSNumber *, id<JXCategoryListContentViewDelegate>> *validListDict;   //已经加载过的列表字典。key是index，value是对应的列表
 @property (nonatomic, strong, readonly) NSObject *currentContainer; //当前内容
 @property (nonatomic, assign) CGFloat titleHeight;
+
+- (void)loadView;
+
 - (void)setIndicatorWidthEqualCell;//线与 cell 的宽度相等
 - (void)setIndicatorWidth:(CGFloat)indicatorWidth;
 - (void)setIndicatorHeight:(CGFloat)indicatorHeight;
