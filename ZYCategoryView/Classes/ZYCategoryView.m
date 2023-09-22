@@ -16,6 +16,7 @@
 @interface ZYCategoryView () <JXCategoryViewDelegate, JXCategoryListContainerViewDelegate, JXCategoryTitleViewDataSource>
 @property (nonatomic, strong) NSMutableDictionary *refreshDict;
 @property (nonatomic, assign) NSInteger oldSelectIndex;
+@property (nonatomic, assign) BOOL isLayoutSubviews;
 @end
 
 @implementation ZYCategoryView
@@ -82,6 +83,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    self.isLayoutSubviews = YES;
     self.titleView.frame = CGRectMake(0, 0, self.frame.size.width, self.titleHeight);
     self.line.frame = CGRectMake(0, CGRectGetMaxY(self.titleView.frame), self.frame.size.width, self.lineHeight);
     if (self.titles.count == 0) {
@@ -127,21 +129,39 @@
     }
 }
 
+- (void)setTitleFont:(UIFont *)titleFont {
+    if (self.titleView.titleFont != titleFont) {
+        self.titleView.titleFont = titleFont;
+        if (self.isLayoutSubviews) {
+            [self reloadTitleView];
+        }
+    }
+}
+
+- (void)setTitleSelectedFont:(UIFont *)titleSelectedFont {
+    if (self.titleView.titleSelectedFont != titleSelectedFont) {
+        self.titleView.titleSelectedFont = titleSelectedFont;
+        if (self.isLayoutSubviews) {
+            [self reloadTitleView];
+        }
+    }
+}
+
 - (void)setTitleColor:(UIColor *)titleColor {
     if (self.titleView.titleColor != titleColor) {
         self.titleView.titleColor = titleColor;
-        [self.titleView refreshState];
-        [self.titleView.collectionView.collectionViewLayout invalidateLayout];
-        [self.titleView.collectionView reloadData];
+        if (self.isLayoutSubviews) {
+            [self reloadTitleView];
+        }
     }
 }
 
 - (void)setTitleSelectedColor:(UIColor *)titleSelectedColor {
     if (self.titleView.titleSelectedColor != titleSelectedColor) {
         self.titleView.titleSelectedColor = titleSelectedColor;
-        [self.titleView refreshState];
-        [self.titleView.collectionView.collectionViewLayout invalidateLayout];
-        [self.titleView.collectionView reloadData];
+        if (self.isLayoutSubviews) {
+            [self reloadTitleView];
+        }
     }
 }
 
@@ -160,6 +180,12 @@
 - (void)reloadData {
     [self.titleView reloadData];
     [self.listContainerView reloadData];
+}
+
+- (void)reloadTitleView {
+    [self.titleView refreshState];
+    [self.titleView.collectionView.collectionViewLayout invalidateLayout];
+    [self.titleView.collectionView reloadData];
 }
 
 - (void)setTitles:(NSArray *)titles {

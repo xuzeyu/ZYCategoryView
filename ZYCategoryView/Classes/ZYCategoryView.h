@@ -67,6 +67,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setIndicatorWidth:(CGFloat)indicatorWidth;
 - (void)setIndicatorHeight:(CGFloat)indicatorHeight;
 - (void)setIndicatorColor:(UIColor *)color;
+- (void)setTitleFont:(UIFont *)titleFont;
+- (void)setTitleSelectedFont:(UIFont *)titleSelectedFont;
 - (void)setTitleColor:(UIColor *)titleColor;
 - (void)setTitleSelectedColor:(UIColor *)titleSelectedColor;
 - (void)setTitleBackgroudColor:(UIColor *)color;
